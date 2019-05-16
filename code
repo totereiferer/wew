@@ -1,0 +1,2892 @@
+
+Public Class Blackjack
+    Dim dealer(4) As Integer
+    Dim player(4) As Integer
+    Dim playertot, dealertot As Integer
+    Dim hit As Integer
+    Dim money As Integer
+    Dim bet As Integer
+    Dim number As Integer
+    Dim value As Integer
+    Dim dealercard As Integer
+    Dim drawvalue1 As Integer
+    Dim drawvalue2 As Integer
+    Dim number1, dealercard1 As Integer
+    Dim name1 As String
+
+    Private Sub Blackjack_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        name1 = InputBox("Enter your name")
+
+        money = 10000
+        hit = 1
+        Call betstart(bet)
+        Call Draw(dealer, player)
+        txtMoney.Text = money
+
+    End Sub
+    Sub BlackjackLoad1()
+        money = 10000
+        hit = 1
+        txtMoney.Text = money
+    End Sub
+    Function RNDM() As Integer
+        Dim random As New Random
+
+        number = random.Next(1, 52)
+
+        Return number
+    End Function
+
+    Function DEALDRAW() As Integer
+        Dim random As New Random
+        dealercard = random.Next(1, 52)
+        Select Case dealercard
+            Case 1 To 4
+                dealercard = 1
+            Case 5 To 8
+                dealercard = 2
+            Case 9 To 12
+                dealercard = 3
+            Case 13 To 16
+                dealercard = 4
+            Case 17 To 20
+                dealercard = 5
+            Case 21 To 24
+                dealercard = 6
+            Case 25 To 28
+                dealercard = 7
+            Case 29 To 32
+                dealercard = 8
+            Case 33 To 36
+                dealercard = 9
+            Case 37 To 40
+                dealercard = 10
+            Case 41 To 44
+                dealercard = 10
+            Case 45 To 48
+                dealercard = 10
+            Case 49 To 52
+                dealercard = 10
+        End Select
+        Return dealercard
+    End Function
+    Function RNDM1() As Integer
+        Dim random As New Random
+
+        number1 = random.Next(1, 52) * Rnd() + 1
+
+        Return number1
+    End Function
+
+    Function DEALDRAW1() As Integer
+        Dim random As New Random
+        dealercard1 = random.Next(1, 52) * Rnd() + 1
+        Select Case dealercard1
+            Case 1 To 4
+                dealercard1 = 1
+            Case 5 To 8
+                dealercard1 = 2
+            Case 9 To 12
+                dealercard1 = 3
+            Case 13 To 16
+                dealercard1 = 4
+            Case 17 To 20
+                dealercard1 = 5
+            Case 21 To 24
+                dealercard1 = 6
+            Case 25 To 28
+                dealercard1 = 7
+            Case 29 To 32
+                dealercard1 = 8
+            Case 33 To 36
+                dealercard1 = 9
+            Case 37 To 40
+                dealercard1 = 10
+            Case 41 To 44
+                dealercard1 = 10
+            Case 45 To 48
+                dealercard1 = 10
+            Case 49 To 52
+                dealercard1 = 10
+        End Select
+        Return dealercard1
+    End Function
+    Sub Reset(ByRef dealer() As Integer, ByRef player() As Integer, ByRef bet As Integer, ByRef hit As Integer)
+        If money <= 0 Then
+            MessageBox.Show("Game Over")
+            Call BlackjackLoad1()
+        Else
+            ReDim player(4)
+            ReDim dealer(4)
+            picPlayer1.Image = Nothing
+            picPlayer2.Image = Nothing
+            picPlayer3.Image = Nothing
+            picPlayer4.Image = Nothing
+            picPlayer5.Image = Nothing
+            picDealer1.Image = Nothing
+            picDealer2.Image = Nothing
+            picDealer3.Image = Nothing
+            bet = 0
+            hit = 1
+        End If
+
+    End Sub
+
+    Sub betstart(ByRef bet As Integer)
+        Try
+            bet = InputBox("Enter your bet")
+            txtBet.Text = bet
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Sub Draw(ByRef dealer() As Integer, ByRef player() As Integer)
+        playertot = player.Sum
+        dealertot = dealer.Sum
+        Call RNDM()
+        Select Case number
+            Case 1
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                If playertot <= 10 Then
+                    drawvalue1 = 11
+                Else
+                    drawvalue1 = 1
+                End If
+            Case 2
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                If playertot <= 10 Then
+                    drawvalue1 = 11
+                Else
+                    drawvalue1 = 1
+                End If
+            Case 3
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acehearts.jpg")
+                If playertot <= 10 Then
+                    drawvalue1 = 11
+                Else
+                    drawvalue1 = 1
+                End If
+            Case 4
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                If playertot <= 10 Then
+                    drawvalue1 = 11
+                Else
+                    drawvalue1 = 1
+                End If
+            Case 5
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                drawvalue1 = 2
+            Case 6
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                drawvalue1 = 2
+            Case 7
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                drawvalue1 = 2
+            Case 8
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                drawvalue1 = 2
+            Case 9
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                drawvalue1 = 3
+            Case 10
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                drawvalue1 = 3
+            Case 11
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                drawvalue1 = 3
+            Case 12
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                drawvalue1 = 3
+            Case 13
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                drawvalue1 = 4
+            Case 14
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                drawvalue1 = 4
+            Case 15
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                drawvalue1 = 4
+            Case 16
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                drawvalue1 = 4
+            Case 17
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                drawvalue1 = 5
+            Case 18
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                drawvalue1 = 5
+            Case 19
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                drawvalue1 = 5
+            Case 20
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                drawvalue1 = 5
+            Case 21
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                drawvalue1 = 6
+            Case 22
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                drawvalue1 = 6
+            Case 23
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                drawvalue1 = 6
+            Case 24
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                drawvalue1 = 6
+            Case 25
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                drawvalue1 = 7
+            Case 26
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                drawvalue1 = 7
+            Case 27
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                drawvalue1 = 7
+            Case 28
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                drawvalue1 = 7
+            Case 29
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                drawvalue1 = 8
+            Case 30
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                drawvalue1 = 8
+            Case 31
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                drawvalue1 = 8
+            Case 32
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                drawvalue1 = 8
+            Case 33
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                drawvalue1 = 9
+            Case 34
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                drawvalue1 = 9
+            Case 35
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                drawvalue1 = 9
+            Case 36
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                drawvalue1 = 9
+            Case 37
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                drawvalue1 = 10
+            Case 38
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                drawvalue1 = 10
+            Case 39
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                drawvalue1 = 10
+            Case 40
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                drawvalue1 = 10
+            Case 41
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                drawvalue1 = 10
+            Case 42
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                drawvalue1 = 10
+            Case 43
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                drawvalue1 = 10
+            Case 44
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                drawvalue1 = 10
+            Case 45
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                drawvalue1 = 10
+            Case 46
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                drawvalue1 = 10
+            Case 47
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                drawvalue1 = 10
+            Case 48
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                drawvalue1 = 10
+            Case 49
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                drawvalue1 = 10
+            Case 50
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                drawvalue1 = 10
+            Case 51
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                drawvalue1 = 10
+            Case 52
+                picPlayer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                drawvalue1 = 10
+        End Select
+        player(0) = drawvalue1
+        Call RNDM1()
+        Select Case number1
+            Case 1
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                If playertot <= 10 Then
+                    drawvalue2 = 11
+                Else
+                    drawvalue2 = 1
+                End If
+            Case 2
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                If playertot <= 10 Then
+                    drawvalue2 = 11
+                Else
+                    drawvalue2 = 1
+                End If
+            Case 3
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acehearts.jpg")
+                If playertot <= 10 Then
+                    drawvalue2 = 11
+                Else
+                    drawvalue2 = 1
+                End If
+            Case 4
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                If playertot <= 10 Then
+                    drawvalue2 = 11
+                Else
+                    drawvalue2 = 1
+                End If
+            Case 5
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                drawvalue2 = 2
+            Case 6
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                drawvalue2 = 2
+            Case 7
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                drawvalue2 = 2
+            Case 8
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                drawvalue2 = 2
+            Case 9
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                drawvalue2 = 3
+            Case 10
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                drawvalue2 = 3
+            Case 11
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                drawvalue2 = 3
+            Case 12
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                drawvalue2 = 3
+            Case 13
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                drawvalue2 = 4
+            Case 14
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                drawvalue2 = 4
+            Case 15
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                drawvalue2 = 4
+            Case 16
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                drawvalue2 = 4
+            Case 17
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                drawvalue2 = 5
+            Case 18
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                drawvalue2 = 5
+            Case 19
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                drawvalue2 = 5
+            Case 20
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                drawvalue2 = 5
+            Case 21
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                drawvalue2 = 6
+            Case 22
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                drawvalue2 = 6
+            Case 23
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                drawvalue2 = 6
+            Case 24
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                drawvalue2 = 6
+            Case 25
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                drawvalue2 = 7
+            Case 26
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                drawvalue2 = 7
+            Case 27
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                drawvalue2 = 7
+            Case 28
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                drawvalue2 = 7
+            Case 29
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                drawvalue2 = 8
+            Case 30
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                drawvalue2 = 8
+            Case 31
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                drawvalue2 = 8
+            Case 32
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                drawvalue2 = 8
+            Case 33
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                drawvalue2 = 9
+            Case 34
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                drawvalue2 = 9
+            Case 35
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                drawvalue2 = 9
+            Case 36
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                drawvalue2 = 9
+            Case 37
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                drawvalue2 = 10
+            Case 38
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                drawvalue2 = 10
+            Case 39
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                drawvalue2 = 10
+            Case 40
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                drawvalue2 = 10
+            Case 41
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                drawvalue2 = 10
+            Case 42
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                drawvalue2 = 10
+            Case 43
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                drawvalue2 = 10
+            Case 44
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                drawvalue2 = 10
+            Case 45
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                drawvalue2 = 10
+            Case 46
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                drawvalue2 = 10
+            Case 47
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                drawvalue2 = 10
+            Case 48
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                drawvalue2 = 10
+            Case 49
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                drawvalue2 = 10
+            Case 50
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                drawvalue2 = 10
+            Case 51
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                drawvalue2 = 10
+            Case 52
+                picPlayer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                drawvalue2 = 10
+        End Select
+        player(1) = drawvalue2
+        Call DEALDRAW()
+        dealer(0) = dealercard
+        Select Case dealer(0)
+            Case 1
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+            Case 2
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+            Case 3
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+            Case 4
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+            Case 5
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+            Case 6
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+            Case 7
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+            Case 8
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+            Case 9
+                picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+            Case 10
+                Dim random As New Random
+                Dim x As Integer
+                x = random.Next(1, 4)
+                Select Case x
+                    Case 1
+                        picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    Case 2
+                        picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    Case 3
+                        picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    Case 4
+                        picDealer1.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                End Select
+        End Select
+        Call DEALDRAW1()
+        dealer(1) = dealercard1
+        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\back.jpg")
+    End Sub
+
+    Private Sub btnDD_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDD.Click
+        hit = hit + 1
+        playertot = player.Sum
+        Call RNDM()
+        Select Case number
+            Case 1
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 2
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 3
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acehearts.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acehearts.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceheartss.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 4
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 5
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                    value = 2
+                End If
+            Case 6
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                    value = 2
+                End If
+            Case 7
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2heartss.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    value = 2
+                End If
+            Case 8
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                    value = 2
+                End If
+            Case 9
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    value = 3
+                End If
+            Case 10
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                    value = 3
+                End If
+            Case 11
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                    value = 3
+                End If
+            Case 12
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                    value = 3
+                End If
+            Case 13
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                    value = 4
+                End If
+            Case 14
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                    value = 4
+                End If
+            Case 15
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                    value = 4
+                End If
+            Case 16
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    value = 4
+                End If
+            Case 17
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                    value = 5
+                End If
+            Case 18
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                    value = 5
+                End If
+            Case 19
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    value = 5
+                End If
+            Case 20
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                    value = 5
+                End If
+            Case 21
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                    value = 6
+                End If
+            Case 22
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    value = 6
+                End If
+            Case 23
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                    value = 6
+                End If
+            Case 24
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                    value = 6
+                End If
+            Case 25
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                    value = 7
+                End If
+            Case 26
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                    value = 7
+                End If
+            Case 27
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                    value = 7
+                End If
+            Case 28
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    value = 7
+                End If
+            Case 29
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                    value = 8
+                End If
+            Case 30
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                    value = 8
+                End If
+            Case 31
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                    value = 8
+                End If
+            Case 32
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    value = 8
+                End If
+            Case 33
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                    value = 9
+                End If
+            Case 34
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                    value = 9
+                End If
+            Case 35
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    value = 9
+                End If
+            Case 36
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                    value = 9
+                End If
+            Case 37
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                    value = 10
+                End If
+            Case 38
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                    value = 10
+                End If
+            Case 39
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                    value = 10
+                End If
+            Case 40
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    value = 10
+                End If
+            Case 41
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    value = 10
+                End If
+            Case 42
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                    value = 10
+                End If
+            Case 43
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                    value = 10
+                End If
+            Case 44
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                    value = 10
+                End If
+            Case 45
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                    value = 10
+                End If
+            Case 46
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                    value = 10
+                End If
+            Case 47
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    value = 10
+                End If
+            Case 48
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                    value = 10
+                End If
+            Case 49
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                    value = 10
+                End If
+            Case 50
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                    value = 10
+                End If
+            Case 51
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                    value = 10
+                End If
+            Case 52
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                    value = 13
+                End If
+        End Select
+
+
+        player(hit) = value
+        playertot = player.Sum
+        Select Case player(0)
+            Case 11
+                If playertot > 21 Then player(0) = 1
+            Case Else
+        End Select
+        Select Case player(1)
+            Case 11
+                If playertot > 21 Then player(1) = 1
+            Case Else
+        End Select
+        playertot = player.Sum
+        Select Case True
+            Case playertot <= 21
+                dealertot = dealer.Sum
+                playertot = player.Sum
+                If dealertot < 17 Then
+                    dealer(2) = DEALDRAW()
+                    dealertot = dealer.Sum
+                    If dealertot > 21 Then
+                        Select Case dealer(1)
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        Select Case dealer(2)
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        MessageBox.Show("You win! The dealer's hand is a bust.")
+                        money = money + bet
+                        txtMoney.Text = money
+                    Else
+                        Select Case True
+                            Case dealertot > playertot
+                                Select Case dealer(1)
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                                    Case 5
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                                    Case 6
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                                    Case 7
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                                    Case 8
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                                    Case 9
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                                    Case 10
+                                        Dim random As New Random
+                                        Dim x As Integer
+                                        x = random.Next(1, 4)
+                                        Select Case x
+                                            Case 1
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                            Case 2
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                            Case 3
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                            Case 4
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                        End Select
+                                End Select
+                                Select Case dealer(2)
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                                    Case 5
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                                    Case 6
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                                    Case 7
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                                    Case 8
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                                    Case 9
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                                    Case 10
+                                        Dim random As New Random
+                                        Dim x As Integer
+                                        x = random.Next(1, 4)
+                                        Select Case x
+                                            Case 1
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                            Case 2
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                            Case 3
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                            Case 4
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                        End Select
+                                End Select
+                                MessageBox.Show("You lose. The dealer's hand has a total value of " & dealertot & " while your hand has a value of " & playertot)
+                                money = money - bet
+                                txtMoney.Text = money
+                            Case dealertot < playertot
+                                Select Case dealer(1)
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                                    Case 5
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                                    Case 6
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                                    Case 7
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                                    Case 8
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                                    Case 9
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                                    Case 10
+                                        Dim random As New Random
+                                        Dim x As Integer
+                                        x = random.Next(1, 4)
+                                        Select Case x
+                                            Case 1
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                            Case 2
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                            Case 3
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                            Case 4
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                        End Select
+                                End Select
+                                Select Case dealer(2)
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                                    Case 5
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                                    Case 6
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                                    Case 7
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                                    Case 8
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                                    Case 9
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                                    Case 10
+                                        Dim random As New Random
+                                        Dim x As Integer
+                                        x = random.Next(1, 4)
+                                        Select Case x
+                                            Case 1
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                            Case 2
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                            Case 3
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                            Case 4
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                        End Select
+                                End Select
+                                MessageBox.Show("You win! Your hand has a total value of " & playertot & " while the dealer only has " & dealertot)
+                                money = money + bet
+                                txtMoney.Text = money
+                            Case dealertot = playertot
+                                Select Case dealer(1)
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                                    Case 5
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                                    Case 6
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                                    Case 7
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                                    Case 8
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                                    Case 9
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                                    Case 10
+                                        Dim random As New Random
+                                        Dim x As Integer
+                                        x = random.Next(1, 4)
+                                        Select Case x
+                                            Case 1
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                            Case 2
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                            Case 3
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                            Case 4
+                                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                        End Select
+                                End Select
+                                Select Case dealer(2)
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                                    Case 5
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                                    Case 6
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                                    Case 7
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                                    Case 8
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                                    Case 9
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                                    Case 10
+                                        Dim random As New Random
+                                        Dim x As Integer
+                                        x = random.Next(1, 4)
+                                        Select Case x
+                                            Case 1
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                            Case 2
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                            Case 3
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                            Case 4
+                                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                        End Select
+                                End Select
+                                MessageBox.Show("It's a push. Your hand's value is equal to the dealer's.")
+                        End Select
+                    End If
+                End If
+            Case playertot > 21
+                Select Case dealer(1)
+                    Case 1
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    Case 2
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    Case 3
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    Case 4
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    Case 5
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    Case 6
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    Case 7
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    Case 8
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    Case 9
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    Case 10
+                        Dim random As New Random
+                        Dim x As Integer
+                        x = random.Next(1, 4)
+                        Select Case x
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                        End Select
+                End Select
+                Select Case dealer(2)
+                    Case 1
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    Case 2
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    Case 3
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    Case 4
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    Case 5
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    Case 6
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    Case 7
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    Case 8
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    Case 9
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    Case 10
+                        Dim random As New Random
+                        Dim x As Integer
+                        x = random.Next(1, 4)
+                        Select Case x
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                        End Select
+                End Select
+
+                MessageBox.Show("You lose. Your hand is a bust.")
+                money = money - bet
+                txtMoney.Text = money
+
+        End Select
+        Call Reset(dealer, player, bet, hit)
+        Call betstart(bet)
+        Call Draw(dealer, player)
+    End Sub
+
+    '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\   HIT    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    Private Sub btnHit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHit.Click
+        hit = hit + 1
+        playertot = player.Sum
+        Call RNDM()
+        Select Case number
+            Case 1
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 2
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acespade.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 3
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acehearts.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acehearts.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceheartss.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 4
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\acediamonds.jpg")
+                    If playertot <= 10 Then
+                        value = 11
+                    Else
+                        value = 1
+                    End If
+                End If
+            Case 5
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2clubs.png")
+                    value = 2
+                End If
+            Case 6
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2spades.png")
+                    value = 2
+                End If
+            Case 7
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    value = 2
+                End If
+            Case 8
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                    value = 2
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                    value = 2
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2diamonds.png")
+                    value = 2
+                End If
+            Case 9
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    value = 3
+                End If
+            Case 10
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3spades.png")
+                    value = 3
+                End If
+            Case 11
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3hearts.png")
+                    value = 3
+                End If
+            Case 12
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                    value = 3
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                    value = 3
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3diamonds.png")
+                    value = 3
+                End If
+            Case 13
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4clubs.png")
+                    value = 4
+                End If
+            Case 14
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4spades.png")
+                    value = 4
+                End If
+            Case 15
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4hearts.png")
+                    value = 4
+                End If
+            Case 16
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    value = 4
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    value = 4
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    value = 4
+                End If
+            Case 17
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5clubs.png")
+                    value = 5
+                End If
+            Case 18
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5spades.png")
+                    value = 5
+                End If
+            Case 19
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    value = 5
+                End If
+            Case 20
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                    value = 5
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                    value = 5
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5diamonds.png")
+                    value = 5
+                End If
+            Case 21
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6clubs.png")
+                    value = 6
+                End If
+            Case 22
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    value = 6
+                End If
+            Case 23
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6hearts.png")
+                    value = 6
+                End If
+            Case 24
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                    value = 6
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                    value = 6
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6diamonds.png")
+                    value = 6
+                End If
+            Case 25
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7clubs.png")
+                    value = 7
+                End If
+            Case 26
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7spades.png")
+                    value = 7
+                End If
+            Case 27
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7hearts.png")
+                    value = 7
+                End If
+            Case 28
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    value = 7
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    value = 7
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    value = 7
+                End If
+            Case 29
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8clubs.png")
+                    value = 8
+                End If
+            Case 30
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8spades.png")
+                    value = 8
+                End If
+            Case 31
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8hearts.png")
+                    value = 8
+                End If
+            Case 32
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    value = 8
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    value = 8
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    value = 8
+                End If
+            Case 33
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9clubs.png")
+                    value = 9
+                End If
+            Case 34
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9spades.png")
+                    value = 9
+                End If
+            Case 35
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    value = 9
+                End If
+            Case 36
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                    value = 9
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                    value = 9
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9diamonds.png")
+                    value = 9
+                End If
+            Case 37
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10clubs.png")
+                    value = 10
+                End If
+            Case 38
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10spades.png")
+                    value = 10
+                End If
+            Case 39
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10hearts.png")
+                    value = 10
+                End If
+            Case 40
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                    value = 10
+                End If
+            Case 41
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                    value = 10
+                End If
+            Case 42
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackspades.png")
+                    value = 10
+                End If
+            Case 43
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jhearts.jpg")
+                    value = 10
+                End If
+            Case 44
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackdiamonds.png")
+                    value = 10
+                End If
+            Case 45
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenclubs.jpg")
+                    value = 10
+                End If
+            Case 46
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenspades.jpg")
+                    value = 10
+                End If
+            Case 47
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                    value = 10
+                End If
+            Case 48
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queendiamonds.png")
+                    value = 10
+                End If
+            Case 49
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingclubs.jpg")
+                    value = 10
+                End If
+            Case 50
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingspades.png")
+                    value = 10
+                End If
+            Case 51
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kinghearts.png")
+                    value = 10
+                End If
+            Case 52
+                If hit = 2 Then
+                    picPlayer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                    value = 10
+                ElseIf hit = 3 Then
+                    picPlayer4.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                    value = 10
+                Else
+                    picPlayer5.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.jpg")
+                    value = 10
+                End If
+        End Select
+
+        player(hit) = value
+        playertot = player.Sum
+        Select Case player(0)
+            Case 11
+                If playertot > 21 Then player(0) = 1
+            Case Else
+        End Select
+        Select Case player(1)
+            Case 11
+                If playertot > 21 Then player(1) = 1
+            Case Else
+        End Select
+        playertot = player.Sum
+
+        Select Case True
+            Case playertot <= 21
+                If hit = 4 Then
+                    Select Case dealer(1)
+                        Case 1
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    Select Case dealer(2)
+                        Case 1
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    MessageBox.Show("You win via a 5-card Charlie!")
+                    money = money + bet
+                    txtMoney.Text = money
+                    Call Reset(dealer, player, bet, hit)
+                    Call betstart(bet)
+                    Call Draw(dealer, player)
+                End If
+            Case Else
+                Select Case dealer(1)
+                    Case 1
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    Case 2
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    Case 3
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    Case 4
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    Case 5
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    Case 6
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    Case 7
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    Case 8
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    Case 9
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    Case 10
+                        Dim random As New Random
+                        Dim x As Integer
+                        x = random.Next(1, 4)
+                        Select Case x
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                        End Select
+                End Select
+                Select Case dealer(2)
+                    Case 1
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    Case 2
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    Case 3
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    Case 4
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    Case 5
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    Case 6
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    Case 7
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    Case 8
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    Case 9
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    Case 10
+                        Dim random As New Random
+                        Dim x As Integer
+                        x = random.Next(1, 4)
+                        Select Case x
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                        End Select
+                End Select
+                MessageBox.Show("You lose. Your hand is a bust.")
+                money = money - bet
+                txtMoney.Text = money
+                Call Reset(dealer, player, bet, hit)
+                Call betstart(bet)
+                Call Draw(dealer, player)
+        End Select
+    End Sub
+
+    Private Sub btnStand_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStand.Click
+        dealertot = dealer.Sum
+        playertot = player.Sum
+        If dealertot < 17 Then
+            dealer(2) = DEALDRAW()
+            dealertot = dealer.Sum
+            If dealertot > 21 Then
+                Select Case dealer(1)
+                    Case 1
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    Case 2
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    Case 3
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    Case 4
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    Case 5
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    Case 6
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    Case 7
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    Case 8
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    Case 9
+                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    Case 10
+                        Dim random As New Random
+                        Dim x As Integer
+                        x = random.Next(1, 4)
+                        Select Case x
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                        End Select
+                End Select
+                Select Case dealer(2)
+                    Case 1
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                    Case 2
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                    Case 3
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                    Case 4
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                    Case 5
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                    Case 6
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                    Case 7
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                    Case 8
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                    Case 9
+                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                    Case 10
+                        Dim random As New Random
+                        Dim x As Integer
+                        x = random.Next(1, 4)
+                        Select Case x
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                        End Select
+                End Select
+                MessageBox.Show("You win! The dealer's hand is a bust.")
+                money = money + bet
+                txtMoney.Text = money
+            Else
+                Select Case True
+                    Case dealertot > playertot
+                        Select Case dealer(1)
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        Select Case dealer(2)
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        MessageBox.Show("You lose. The dealer's hand has a total value of " & dealertot & " while your hand has a value of " & playertot)
+                        money = money - bet
+                        txtMoney.Text = money
+                    Case dealertot < playertot
+                        Select Case dealer(1)
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        Select Case dealer(2)
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        MessageBox.Show("You win! Your hand has a total value of " & playertot & " while the dealer only has " & dealertot)
+                        money = money + bet
+                        txtMoney.Text = money
+                    Case dealertot = playertot
+                        Select Case dealer(1)
+                            Case 1
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        Select Case dealer(2)
+                            Case 1
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                            Case 2
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                            Case 3
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                            Case 4
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                            Case 5
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                            Case 6
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                            Case 7
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                            Case 8
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                            Case 9
+                                picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                            Case 10
+                                Dim random As New Random
+                                Dim x As Integer
+                                x = random.Next(1, 4)
+                                Select Case x
+                                    Case 1
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                    Case 2
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                    Case 3
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                    Case 4
+                                        picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                                End Select
+                        End Select
+                        MessageBox.Show("It's a push. Your hand's value is equal to the dealer's.")
+                End Select
+            End If
+        Else
+            Select Case True
+                Case dealertot > playertot
+                    Select Case dealer(1)
+                        Case 1
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    Select Case dealer(2)
+                        Case 1
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    MessageBox.Show("You lose. The dealer's hand has a total value of " & dealertot & " while your hand has a value of " & playertot)
+                    money = money - bet
+                    txtMoney.Text = money
+                Case dealertot < playertot
+                    Select Case dealer(1)
+                        Case 1
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    Select Case dealer(2)
+                        Case 1
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    MessageBox.Show("You win! Your hand has a total value of " & playertot & " while the dealer only has " & dealertot)
+                    money = money + bet
+                    txtMoney.Text = money
+                Case dealertot = playertot
+                    Select Case dealer(1)
+                        Case 1
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer2.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    Select Case dealer(2)
+                        Case 1
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\aceclubs.jpg")
+                        Case 2
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\2hearts.png")
+                        Case 3
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\3clubs.png")
+                        Case 4
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\4diamonds.png")
+                        Case 5
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\5hearts.png")
+                        Case 6
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\6spades.png")
+                        Case 7
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\7diamonds.png")
+                        Case 8
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\8diamonds.png")
+                        Case 9
+                            picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\9hearts.png")
+                        Case 10
+                            Dim random As New Random
+                            Dim x As Integer
+                            x = random.Next(1, 4)
+                            Select Case x
+                                Case 1
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\10diamonds.png")
+                                Case 2
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\jackclubs.png")
+                                Case 3
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\queenhearts.png")
+                                Case 4
+                                    picDealer3.Image = Image.FromFile("D:\Users\Kirt Anthony\Desktop\cards\kingdiamonds.png")
+                            End Select
+                    End Select
+                    MessageBox.Show("It's a push. Your hand's value is equal to the dealer's.")
+            End Select
+        End If
+        Call Reset(dealer, player, bet, hit)
+        Call betstart(bet)
+        Call Draw(dealer, player)
+    End Sub
+
+
+    Private Sub btnSurr_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSurr.Click
+        bet = bet / 2
+        money = money - bet
+        txtMoney.Text = money
+        MessageBox.Show("You surrendered. Half your bet will be deducted from your total money.")
+        Call Reset(dealer, player, bet, hit)
+        Call betstart(bet)
+        Call Draw(dealer, player)
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+
+    End Sub
+End Class
